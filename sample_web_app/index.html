@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload and Processing</title>
+  <style>
+    #container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #upload-section,
+    #result-section {
+      width: 45%;
+    }
+
+    #processed-image {
+      max-width: 100%;
+    }
+
+    .bbox {
+      position: absolute;
+      border: 2px solid red;
+      pointer-events: none;
+    }
+
+    .text-overlay {
+      position: absolute;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 2px;
+      pointer-events: none;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="container">
+    <!-- Image upload section -->
+    <div id="upload-section">
+      <h2>Upload Image</h2>
+      <input type="file" id="imageInput" accept="image/*">
+      <button onclick="processImage()">Process Image</button>
+    </div>
+
+    <!-- Result display section -->
+    <div id="result-section">
+      <h2>Processed Image</h2>
+      <div>
+        <p>Message: </p>
+        <span id="result-section-message"></span>
+      </div>
+      <div id="imageContainer" style="position:relative;">
+        <img id="processed-image" alt="Processed Image">
+      </div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
