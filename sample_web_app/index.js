@@ -1,3 +1,7 @@
+const MODEL = 'Gemini-Nano'
+const SERVER_URL = "http://127.0.0.1:5000"
+
+
 async function processImage() {
   const imageInput = document.getElementById('imageInput');
   const file = imageInput.files[0];
@@ -15,7 +19,7 @@ async function processImage() {
 
   try {
     // Send image to Flask backend for processing
-    const response = await fetch("http://127.0.0.1:5000/process_image", {
+    const response = await fetch(`${SERVER_URL}/process_image`, {
       method: "POST",
       body: formData
     });
@@ -41,8 +45,13 @@ async function processImage() {
       // Draw bounding boxes and add translated text
       data.forEach(async (detection) => {
         const [topLeft, bottomRight] = detection.bbox;
-        const translatedText = await translateText(detection.text);
-
+        let translatedText = '';
+        if (MODEL == 'device') {
+          translatedText = await translateTextOnDevice(detection.text);
+        }
+        else {
+          translatedText = await translateTextExternal(detection.text, MODEL);
+        }
         // Draw bounding box
         const box = document.createElement("div");
         box.classList.add("bbox");
@@ -68,8 +77,8 @@ async function processImage() {
 }
 
 // Mock translation function - replace with API call
-async function translateText(text) {
-  // Sample code to use AI translation model
+async function translateTextOnDevice(text) {
+  // code to use the inbuilt gemini nano model in google chrome canary 
   const session = await ai.languageModel.create();
   let result = (await session.prompt(`Translate to English, only one answer, json format with attribute 'translation' containing the english translated sentence, no explanation needed: ${text}`)).trim();
 
@@ -88,4 +97,8 @@ async function translateText(text) {
   }
   //console.log("Got Translated result: ", result);
   return result.translation;
+}
+
+async function translateTextExternal(text, model) {
+
 }
