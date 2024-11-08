@@ -108,7 +108,7 @@ pprint.pprint(text_detections)
 
 # Initial parameters
 initial_threshold = 0.10
-initial_vertical_threshold = 5
+initial_vertical_threshold = 35
 initial_horizontal_threshold = 50
 
 # Merge bounding boxes until no further merges are possible
